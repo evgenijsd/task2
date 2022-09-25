@@ -1,12 +1,12 @@
 
 import React, { useState } from "react"
-import { INote } from "../models"
+import { ICategory } from "../models"
 
-interface NoteListProps {
-    note: INote
+interface CategoryListProps {
+    category: ICategory
 }
 
-export function NoteList({ note }: NoteListProps) {
+export function CategoryList({ category }: CategoryListProps) {
     const [details, setDetails] = useState(false)
 
     const btnBgClassName = details ? 'bg-yellow-400' : 'bg-blue-400'
@@ -16,9 +16,9 @@ export function NoteList({ note }: NoteListProps) {
     return (
         <div className="border py-2 px-4 rounded flex flex-col items-center mb-2"
         >
-            <img src={note.picture} className="w-1/6" alt={note.name} />
-            <p> { note.content } </p>
-            <p className="font-bold">{note.dates}</p>
+            <img src={category.picture} className="w-1/6" alt={category.name} />
+            <p> { category.name } </p>
+            <p className="font-bold">{category.name}</p>
             <button 
                 className={btnClasses.join(' ')}
                 onClick={() => setDetails(prev => !prev)}
@@ -27,8 +27,8 @@ export function NoteList({ note }: NoteListProps) {
             </button>
 
             {details && <div>
-                <p> { note.archive }</p>
-                <p>Rate: <span style={{ fontWeight: 'bold' }}>{note.category}</span></p>
+                <p> { category.name }</p>
+                <p>Rate: <span style={{ fontWeight: 'bold' }}>{category.id}</span></p>
             </div>}
         </div>
     )
