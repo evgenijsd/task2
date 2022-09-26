@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { fetchNotes } from '../store/action-creators/note';
 
 const NoteList: React.FC = () => {
     const {notes, error, loading} = useTypedSelector(state => state.note)
-    const dispatch = useDispatch()
+    const {fetchNotes} = useActions()
 
     useEffect(() => {
-        dispatch(fetchNotes())
+        fetchNotes()
     }, []) 
 
     if (loading) {
@@ -22,7 +21,7 @@ const NoteList: React.FC = () => {
     return (
         <div>
             {notes.map(note =>
-                <div>{note.name}</div>
+                <div key={note.id}>{note.name}</div>
             )}
         </div>
     )
