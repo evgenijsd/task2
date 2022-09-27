@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 import NoteList from './components/NoteList'
 
+
 function App() {
+
+
   return (
     <>
         <div>
+            <div>
             <NoteList/>
+            
+            </div>
+            
         </div>
+      
     </>
   )
 }

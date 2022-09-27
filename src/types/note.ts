@@ -6,7 +6,7 @@ export interface NoteState {
 export enum NoteActionTypes {
     FETCH_NOTES = 'FETCH_NOTES',
     FETCH_NOTES_SUCCESS = 'FETCH_NOTES_SUCCESS',
-    FETCH_NOTES_ERROR = 'FETCH_NOTES_FETCH_NOTES_ERROR',
+    FETCH_NOTES_ERROR = 'FETCH_NOTES_ERROR',
 }
 interface FetchNotesAction {
     type: NoteActionTypes.FETCH_NOTES;
