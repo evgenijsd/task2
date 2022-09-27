@@ -5,17 +5,23 @@ import CategoryList from './CategoryList';
 import { CreateNote } from './CreateNote';
 import { Modal } from './Modal';
 import { INote } from '../types/noteData';
-
+import { TableLineNote } from './TableLineNote';
+import { TableNoteHeader } from './TableNoteHeader';
 
 const NoteList: React.FC = () => {
     const {notes, error, loading} = useTypedSelector(state => state.note)
-    const {fetchNotes} = useActions()
+    const {fetchNotes} = useActions()    
 
-    const [modal, setModal] = useState(true)
+    const [modal, setModal] = useState(false)
 
-const createHandler = (note: INote) => {
-  setModal(false)
-}
+    const createHandler = (note: INote) => {
+      setModal(false)
+      notes.push(note)
+    }
+
+    const closeState = () => {
+      setModal(false)
+    }
 
     useEffect(() => {
         fetchNotes()
@@ -31,59 +37,27 @@ const createHandler = (note: INote) => {
     
     return (
         <>
-      <table className="table-auto">
-			{/* <col style="width:5%"/>
-			<col style="width:20%"/>
-			<col style="width:15%"/>
-			<col style="width:15%"/>
-			<col style="width:15%"/>
-			<col style="width:20%"/>
-			<col style="width:10%"/> */}
-			<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Created</th>
-			<th>Category</th>
-			<th>Content</th>
-			<th>Dates</th>
-			<th>
-				<div className="container" >                    
-					<button className="btn2" id="notes_archive"><img height="30" width="30" src="https://img.icons8.com/dotty/344/archive-folder.png"/></button>          
-					<button className="btn2" id="notes_delete"><img height="30" width="30" src="https://img.icons8.com/sf-ultralight/344/trash.png"/></button>
-				</div>
-			</th>
-			</tr>
-			<tbody id="table-notes">
-      {notes.map(note =>
-      <tr>
-            <td><img height="45" width="45" src={note.picture}/></td>
-            <td>{note.name}</td>
-            <td>{new Date(note.created).toLocaleDateString()}</td>
-            <td>{note.category}</td>
-            <td>{note.content}</td>
-            <td>{note.dates}</td>
-            <td>
-            <div className="container" >            
-            <button className="btn">
-                <img height="25" width="25" src="https://img.icons8.com/material-rounded/344/edit--v1.png"/>
-            </button>          
-            <button className="btn">
-                <img height="25" width="25" src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/344/external-_36-user-interface-jumpicon-(glyph)-jumpicon-glyph-ayub-irawan.png"/>
-            </button>          
-            <button className="btn">
-                <img height="25" width="25" src="https://img.icons8.com/material-sharp/344/trash.png"/>
-            </button>
-        </div> 
-        </td>
-        </tr>
-        )}
-      </tbody>
-		</table>
-    <button id="button-create" type="button">Create Note</button>
-    <CategoryList/>
-    {modal && <Modal onClose={close}>
-            <CreateNote onCreate={createHandler}/>
-            </Modal>}
+        {!modal && <>
+            <table className="table-auto">
+              <TableNoteHeader notes={notes} />      
+              <TableLineNote notes={notes.filter(x => !x.archive)} />
+            </table>
+
+            <button id="button-create" type="button" onClick={() => setModal(true)}>Create Note</button>
+
+            <CategoryList />
+
+            <table className="table-auto">
+              <TableNoteHeader notes={notes} />      
+              <TableLineNote notes={notes.filter(x => x.archive)} />
+            </table>
+          </>}
+
+          {modal && 
+            <Modal onClose={closeState}>
+              <CreateNote onCreate={createHandler}/>
+            </Modal>
+          }
       </>
     )
 }

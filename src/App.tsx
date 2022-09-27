@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { Provider } from 'react-redux';
 
 import NoteList from './components/NoteList'
+import { store } from './store';
 
 
 function App() {
@@ -8,14 +10,9 @@ function App() {
 
   return (
     <>
-        <div>
-            <div>
+          <Provider store={store}>
             <NoteList/>
-            
-            </div>
-            
-        </div>
-      
+          </Provider>
     </>
   )
 }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 import { INote } from '../types/noteData';
 import { ErrorMessage } from './ErrorMessage';
 
-let datesFindRegular = /((\d|\d{2})\D(\d|\d{2})\D\d{4})|(\d{4}\D(\d|\d{2})\D(\d|\d{2}))/g
+const datesFindRegular = /((\d|\d{2})\D(\d|\d{2})\D\d{4})|(\d{4}\D(\d|\d{2})\D(\d|\d{2}))/g
 
 const noteData: INote = {
-    id: '000',
+    id: 'id' + Date.now().toString(),
     archive: false,
     category: 'Category',
     content: 'Content',
@@ -25,6 +26,8 @@ export function CreateNote({onCreate}: CreateNotesProps) {
     const [content, setContent] = useState('')
     const [error, setError] = useState('')
 
+    const categories = useTypedSelector(state => state.category).categories
+   
     const submitHandler = (event: React.FormEvent) => {
         event.preventDefault()
         setError('')
@@ -47,7 +50,11 @@ export function CreateNote({onCreate}: CreateNotesProps) {
                 <form className="guruweba_example_form" id="form" onSubmit={submitHandler}>
                     <div className="guruweba_example_caption">Edit/Create</div>
                     <div className="guruweba_example_infofield">Category</div>
-                    <select id="categories" value={category} onChange={event => setCategory(event.target.value)}/>
+                    <select id="categories" onChange={event => setCategory(event.target.value)}>
+                        {categories.map(option => (
+                            <option value={option.name}>{option.name}</option>
+                        ))}
+                        </select>                        
                     <div>Name</div>
                     <input type="text" id="name" value={name} onChange={event => setName(event.target.value)}/>
                     <div>Content</div>
