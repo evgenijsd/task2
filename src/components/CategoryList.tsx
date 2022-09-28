@@ -30,7 +30,7 @@ const CategoryList: React.FC = () => {
 			</tr>
 			<tbody id="table-categories">
       {categories.map(category =>
-      <tr>      
+        <tr>      
             <td><img height="45" width="45" src={category.picture}/></td>
             <td>{category.name}</td>
             <td>{Object.keys(notes.filter(note => !note.archive && category.name == note.category)).length}</td>
