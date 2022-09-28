@@ -1,36 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { INote } from '../types/noteData';
 import { ErrorMessage } from './ErrorMessage';
 
 const datesFindRegular = /((\d|\d{2})\D(\d|\d{2})\D\d{4})|(\d{4}\D(\d|\d{2})\D(\d|\d{2}))/g
 
-const noteData: INote = {
-    id: 'id' + Date.now().toString(),
-    archive: false,
-    category: 'Category',
-    content: 'Content',
-    created: new Date(),
-    dates: 'Dates',
-    name: 'NAme',
-    picture: 'Picture'
+interface CreateNotesProps {
+    onCreate: (note: INote) => void,
 }
 
-interface CreateNotesProps {
-    onCreate: (note: INote) => void
-}
 
 export function CreateNote({onCreate}: CreateNotesProps) {
+    const notes = useTypedSelector(state => state.note).notes 
+    const categories = useTypedSelector(state => state.category).categories 
     const [name, setName] = useState('')
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(categories[0].name)
     const [content, setContent] = useState('')
-    const [error, setError] = useState('')
+    const [error, setError] = useState('') 
 
-    const categories = useTypedSelector(state => state.category).categories
+    let noteData: INote = {
+        id: 'id' + Date.now().toString(),
+        archive: false,
+        category: '',
+        content: '',
+        created: new Date(),
+        dates: '',
+        name: '',
+        picture: ''
+    }
+    
+    useEffect(() => {
+        initCreate()
+    }, []) 
+
+    const initCreate = () => {
+        let id = localStorage.getItem('id')        
+        
+        if (id) {
+            const noteId = notes.find(x => x.id === id)
+            noteData.id = noteId.id
+            noteData.created = noteId.created
+            setName(noteId.name)
+            setCategory(noteId.category)
+            setContent(noteId.content)
+        } else{
+            noteData.name = name
+            noteData.category = category
+            noteData.content = content
+            noteData.dates = (content.match(datesFindRegular) || []).join(', ')
+            noteData.picture = categories.find(x => x.name === noteData.category).picture
+        } 
+    }  
    
     const submitHandler = (event: React.FormEvent) => {
         event.preventDefault()
-        setError('')
+        setError('')         
+
+        initCreate()
         
         if (name.trim().length === 0) {
             setError('Please enter name.')
@@ -41,6 +67,9 @@ export function CreateNote({onCreate}: CreateNotesProps) {
         noteData.category = category
         noteData.content = content
         noteData.dates = (content.match(datesFindRegular) || []).join(', ')
+        noteData.picture = categories.find(x => x.name === noteData.category).picture
+
+        localStorage.setItem('id', '')
 
         onCreate(noteData)
     }
@@ -50,9 +79,9 @@ export function CreateNote({onCreate}: CreateNotesProps) {
                 <form className="guruweba_example_form" id="form" onSubmit={submitHandler}>
                     <div className="guruweba_example_caption">Edit/Create</div>
                     <div className="guruweba_example_infofield">Category</div>
-                    <select id="categories" onChange={event => setCategory(event.target.value)}>
+                    <select id="categories" value={category} onChange={event => setCategory(event.target.value)}>
                         {categories.map(option => (
-                            <option value={option.name}>{option.name}</option>
+                            <option key={option.name}>{option.name}</option>
                         ))}
                         </select>                        
                     <div>Name</div>

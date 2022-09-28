@@ -22,10 +22,6 @@ const CategoryList: React.FC = () => {
     return (
         <>
         <table>
-			{/* <col style="width:5%" >
-			<col style="width:35%">
-			<col style="width:30%">
-			<col style="width:30%"> */}
 			<tr>
 				<th></th>
 				<th>Note Category</th>

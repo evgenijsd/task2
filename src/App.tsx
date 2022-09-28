@@ -6,13 +6,9 @@ import { store } from './store';
 
 
 function App() {
-
-
   return (
-    <>
-          <Provider store={store}>
-            <NoteList/>
-          </Provider>
+    <> 
+      <NoteList/>
     </>
   )
 }

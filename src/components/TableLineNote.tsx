@@ -4,10 +4,11 @@ import { ContainerArchive } from './ContainerArchive';
 import { ContainerNote } from './ContainerNote';
 
 interface TableLineNotesProps {
-    notes: INote[]
+    notes: INote[],
+    updateNote: () => void
 }
 
-export function TableLineNote({notes}: TableLineNotesProps) {
+export function TableLineNote({notes, updateNote}: TableLineNotesProps) {
    
     return (
         <tbody id="table-notes">
@@ -20,7 +21,7 @@ export function TableLineNote({notes}: TableLineNotesProps) {
                         <td>{note.content}</td>
                         <td>{note.dates}</td>
                         <td>
-                            {!note.archive && <ContainerNote note={note} />}
+                            {!note.archive && <ContainerNote note={note} onUpdate={updateNote}/>}
                             {note.archive && <ContainerArchive note={note} />}
                         </td>
                     </tr>

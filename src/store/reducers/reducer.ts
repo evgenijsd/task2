@@ -14,8 +14,6 @@ export const noteReducer = (state = initialState, action: NoteAction): NoteState
             return { loading: false, error: null, notes: action.payload }
         case NoteActionTypes.FETCH_NOTES_ERROR:
             return { loading: false, error: action.payload, notes: [] }
-        case NoteActionTypes.UPDATE_NOTE:
-            return { loading: false, error: null, notes: action.payload }
         default:
             return state
     }

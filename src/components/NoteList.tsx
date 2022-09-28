@@ -7,20 +7,41 @@ import { Modal } from './Modal';
 import { INote } from '../types/noteData';
 import { TableLineNote } from './TableLineNote';
 import { TableNoteHeader } from './TableNoteHeader';
+import { NoteActionTypes } from '../types/note';
+import { useDispatch } from 'react-redux';
 
 const NoteList: React.FC = () => {
-    const {notes, error, loading} = useTypedSelector(state => state.note)
+    let {notes, error, loading} = useTypedSelector(state => state.note)
     const {fetchNotes} = useActions()    
+    const dispatch = useDispatch()
 
     const [modal, setModal] = useState(false)
 
     const createHandler = (note: INote) => {
       setModal(false)
-      notes.push(note)
+      
+      if (!notes.find(x => x.id === note.id)) {
+        notes.push(note)        
+      }
+      else {
+        notes = notes.map(x => (x.id === note.id ? note : x))
+      }
+
+      dispatch({ type: NoteActionTypes.UPDATE_NOTE, payload: notes })
+      
+      localStorage.setItem('id', '')
     }
 
     const closeState = () => {
       setModal(false)
+    }
+
+    const clickCreate = () => {
+      setModal(true)
+    }
+
+    const onModal = () => {
+      setModal(true)
     }
 
     useEffect(() => {
@@ -40,22 +61,22 @@ const NoteList: React.FC = () => {
         {!modal && <>
             <table className="table-auto">
               <TableNoteHeader notes={notes} />      
-              <TableLineNote notes={notes.filter(x => !x.archive)} />
+              <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
             </table>
 
-            <button id="button-create" type="button" onClick={() => setModal(true)}>Create Note</button>
+            <button id="button-create" type="button" onClick={clickCreate}>Create Note</button>
 
             <CategoryList />
 
             <table className="table-auto">
               <TableNoteHeader notes={notes} />      
-              <TableLineNote notes={notes.filter(x => x.archive)} />
+              <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
             </table>
           </>}
 
           {modal && 
             <Modal onClose={closeState}>
-              <CreateNote onCreate={createHandler}/>
+              <CreateNote onCreate={createHandler} />
             </Modal>
           }
       </>
