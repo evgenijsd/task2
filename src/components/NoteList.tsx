@@ -60,7 +60,7 @@ const NoteList: React.FC = () => {
         <>
         {!modal && <>
             <table className="table-auto">
-              <TableNoteHeader notes={notes} />      
+              <TableNoteHeader notes={notes} archive={false}/>      
               <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
             </table>
 
@@ -69,7 +69,7 @@ const NoteList: React.FC = () => {
             <CategoryList />
 
             <table className="table-auto">
-              <TableNoteHeader notes={notes} />      
+              <TableNoteHeader notes={notes} archive={true}/>      
               <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
             </table>
           </>}
