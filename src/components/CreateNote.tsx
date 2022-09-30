@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../hooks/useTypedSelector';
+import { NoteActionTypes } from '../types/note';
 import { INote } from '../types/noteData';
 import { ErrorMessage } from './ErrorMessage';
 
@@ -11,6 +13,7 @@ interface CreateNotesProps {
 
 
 export function CreateNote({onCreate}: CreateNotesProps) {
+    const dispatch = useDispatch()
     const notes = useTypedSelector(state => state.note).notes 
     const categories = useTypedSelector(state => state.category).categories 
     const [name, setName] = useState('')
@@ -68,6 +71,19 @@ export function CreateNote({onCreate}: CreateNotesProps) {
         noteData.content = content
         noteData.dates = (content.match(datesFindRegular) || []).join(', ')
         noteData.picture = categories.find(x => x.name === noteData.category).picture
+
+        if (!notes.find(x => x.id === noteData.id)) {
+            dispatch({
+                type: NoteActionTypes.ADD_NOTE,
+                payload: noteData
+            })       
+        }
+        else {
+            dispatch({
+                type: NoteActionTypes.UPDATE_NOTE,
+                payload: noteData
+            })              
+        }
 
         localStorage.setItem('id', '')
 

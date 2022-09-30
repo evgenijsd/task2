@@ -7,27 +7,15 @@ import { Modal } from './Modal';
 import { INote } from '../types/noteData';
 import { TableLineNote } from './TableLineNote';
 import { TableNoteHeader } from './TableNoteHeader';
-import { NoteActionTypes } from '../types/note';
-import { useDispatch } from 'react-redux';
 
 const NoteList: React.FC = () => {
     let {notes, error, loading} = useTypedSelector(state => state.note)
     const {fetchNotes} = useActions()    
-    const dispatch = useDispatch()
 
     const [modal, setModal] = useState(false)
 
     const createHandler = (note: INote) => {
       setModal(false)
-      
-      if (!notes.find(x => x.id === note.id)) {
-        notes.push(note)        
-      }
-      else {
-        notes = notes.map(x => (x.id === note.id ? note : x))
-      }
-
-      dispatch({ type: NoteActionTypes.UPDATE_NOTE, payload: notes })
       
       localStorage.setItem('id', '')
     }
