@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { INote } from '../types/noteData';
 import { ContainerArchive } from './ContainerArchive';
 import { ContainerNote } from './ContainerNote';

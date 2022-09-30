@@ -7,80 +7,67 @@ import { Modal } from './Modal';
 import { INote } from '../types/noteData';
 import { TableLineNote } from './TableLineNote';
 import { TableNoteHeader } from './TableNoteHeader';
-import { NoteActionTypes } from '../types/note';
-import { useDispatch } from 'react-redux';
 
 const NoteList: React.FC = () => {
-    let {notes, error, loading} = useTypedSelector(state => state.note)
-    const {fetchNotes} = useActions()    
-    const dispatch = useDispatch()
+  let {notes, error, loading} = useTypedSelector(state => state.note)
+  const {fetchCategories} = useActions()
+  const {fetchNotes} = useActions()    
 
-    const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false)
 
-    const createHandler = (note: INote) => {
-      setModal(false)
-      
-      if (!notes.find(x => x.id === note.id)) {
-        notes.push(note)        
-      }
-      else {
-        notes = notes.map(x => (x.id === note.id ? note : x))
-      }
+  const createHandler = (note: INote) => {
+    setModal(false)
+  }
 
-      dispatch({ type: NoteActionTypes.UPDATE_NOTE, payload: notes })
-      
-      localStorage.setItem('id', '')
-    }
+  const closeState = () => {
+    setModal(false)
+  }
 
-    const closeState = () => {
-      setModal(false)
-    }
+  const clickCreate = () => {
+    setModal(true)
+  }
 
-    const clickCreate = () => {
-      setModal(true)
-    }
+  const onModal = () => {
+    setModal(true)
+  }
 
-    const onModal = () => {
-      setModal(true)
-    }
+  useEffect(() => {
+      fetchNotes()
+      fetchCategories()
+  }, []) 
 
-    useEffect(() => {
-        fetchNotes()
-    }, []) 
+  if (loading) {
+      return <h1>Loading...</h1>
+  }
+  if (error) {
+      return <h1>{error}</h1>
+  }
+  
+  return (
+      <>
+      {!modal && <>
+          <table className="table-auto">
+            <TableNoteHeader archive={false}/>      
+            <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
+          </table>
 
-    if (loading) {
-        return <h1>Loading...</h1>
-    }
-    if (error) {
-        return <h1>{error}</h1>
-    }
+          <button id="button-create" type="button" onClick={clickCreate}>Create Note</button>
 
-    
-    return (
-        <>
-        {!modal && <>
-            <table className="table-auto">
-              <TableNoteHeader notes={notes} archive={false}/>      
-              <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
-            </table>
+          <CategoryList />
 
-            <button id="button-create" type="button" onClick={clickCreate}>Create Note</button>
+          <table className="table-auto">
+            <TableNoteHeader archive={true}/>      
+            <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
+          </table>
+        </>}
 
-            <CategoryList />
-
-            <table className="table-auto">
-              <TableNoteHeader notes={notes} archive={true}/>      
-              <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
-            </table>
-          </>}
-
-          {modal && 
-            <Modal onClose={closeState}>
-              <CreateNote onCreate={createHandler} />
-            </Modal>
-          }
-      </>
-    )
+        {modal && 
+          <Modal onClose={closeState}>
+            <CreateNote onCreate={createHandler} />
+          </Modal>
+        }
+    </>
+  )
 }
 
 export default NoteList

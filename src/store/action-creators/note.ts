@@ -1,6 +1,5 @@
 import axios from "axios"
 import { Dispatch } from "redux"
-import { useTypedSelector } from "../../hooks/useTypedSelector"
 import { NoteAction, NoteActionTypes } from "../../types/note"
 
 

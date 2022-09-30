@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypedSelector';
 import { NoteActionTypes } from '../types/note';
 import { INote } from '../types/noteData';
 
@@ -9,17 +8,20 @@ interface ContainerArchiveProps {
 }
 
 export function ContainerArchive({note}: ContainerArchiveProps) {
-    let notes = useTypedSelector(state => state.note).notes
     const dispatch = useDispatch()
 
-    const restoreNote = (note: any) => {
-        note.archive = false
-        dispatch({ type: NoteActionTypes.UPDATE_NOTE, payload: notes })
+    const restoreNote = (note: INote) => {
+        dispatch({
+            type: NoteActionTypes.RESTORE_NOTE,
+            payload: note
+        })
     }
     
-    const deleteNote = (note: any) => {
-        notes = notes.filter(x => x.id !== note.id)
-        dispatch({ type: NoteActionTypes.UPDATE_NOTE, payload: notes })
+    const deleteNote = (note: INote) => {
+        dispatch({
+            type: NoteActionTypes.REMOVE_NOTE,
+            payload: note
+        })
     }
    
     return (
