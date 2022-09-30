@@ -25,6 +25,7 @@ const NoteList: React.FC = () => {
 
   const clickCreate = () => {
     setModal(true)
+    localStorage.setItem('id', '')
   }
 
   const onModal = () => {
