@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { NoteActionTypes } from '../types/note';
@@ -13,7 +13,12 @@ export function ContainerNote({note, onUpdate}: ContainerNoteProps) {
     let notes = useTypedSelector(state => state.note).notes
     const dispatch = useDispatch()
 
-    const editNote = (note: any) => {
+    const editNote = (note: INote) => {
+        dispatch({
+            type: NoteActionTypes.UPDATE_NOTE,
+            payload: note
+        })
+
         localStorage.setItem('id', note.id)
         onUpdate()        
     }

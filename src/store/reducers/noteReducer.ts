@@ -18,6 +18,7 @@ export const noteReducer = (state = initialState, action: NoteAction): NoteState
 
         case NoteActionTypes.UPDATE_NOTE:
             const noteUpdate = action.payload
+            localStorage.setItem('id', '')
             return { loading: false, error: null, notes: state.notes.map(x => (x.id === noteUpdate.id ? noteUpdate : x)) }
 
         case NoteActionTypes.ADD_NOTE:

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypedSelector';
 import { NoteActionTypes } from '../types/note';
 import { INote } from '../types/noteData';
 

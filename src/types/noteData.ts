@@ -1,5 +1,5 @@
 export interface INote {
-    id?: string
+    id: string
     archive: boolean
     category: string
     content: string

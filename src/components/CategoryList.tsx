@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useActions } from '../hooks/useActions';
+import React from 'react';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const CategoryList: React.FC = () => {
@@ -23,15 +22,15 @@ const CategoryList: React.FC = () => {
 				<th>Archived</th>
 			</tr>
 			<tbody id="table-categories">
-      {categories.map(category =>
-        <tr>      
-            <td><img height="45" width="45" src={category.picture}/></td>
-            <td>{category.name}</td>
-            <td>{Object.keys(notes.filter(note => !note.archive && category.name == note.category)).length}</td>
-            <td>{Object.keys(notes.filter(note => note.archive && category.name == note.category)).length}</td>
-        </tr>
-        )}
-      </tbody>
+                {categories.map(category =>
+                    <tr>      
+                        <td><img height="45" width="45" src={category.picture}/></td>
+                        <td>{category.name}</td>
+                        <td>{Object.keys(notes.filter(note => !note.archive && category.name == note.category)).length}</td>
+                        <td>{Object.keys(notes.filter(note => note.archive && category.name == note.category)).length}</td>
+                    </tr>
+                    )}
+            </tbody>
 		</table>
       </>
     )

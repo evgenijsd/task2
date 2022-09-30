@@ -6,6 +6,8 @@ export interface NoteState {
     error: null | string;
 }
 
+export const datesFindRegular = /((\d|\d{2})\D(\d|\d{2})\D\d{4})|(\d{4}\D(\d|\d{2})\D(\d|\d{2}))/g
+
 export enum NoteActionTypes {
     FETCH_NOTES = 'FETCH_NOTES',
     FETCH_NOTES_SUCCESS = 'FETCH_NOTES_SUCCESS',
