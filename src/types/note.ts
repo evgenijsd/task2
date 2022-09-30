@@ -15,6 +15,8 @@ export enum NoteActionTypes {
     ARCHIVE_NOTE = 'ARCHIVE_NOTE',
     RESTORE_NOTE = 'RESTORE_NOTE',
     REMOVE_NOTE = 'REMOVE_NOTE',
+    REMOVE_All_TOGGLE = 'REMOVE_All_TOGGLE',
+    ARCHIVE_All_TOGGLE = 'ARCHIVE_All_TOGGLE',
 }
 
 interface FetchNotesAction {
@@ -53,6 +55,16 @@ interface RemoveNoteAction {
     payload: INote;
 }
 
+interface RemoveAllToggleAction {
+    type: NoteActionTypes.REMOVE_All_TOGGLE;
+    payload: boolean;
+}
+
+interface ArchiveAllToggleAction {
+    type: NoteActionTypes.ARCHIVE_All_TOGGLE;
+    payload: boolean;
+}
+
 export type NoteAction = 
                 FetchNotesAction | 
                 FetchNotesErrorAction | 
@@ -61,4 +73,6 @@ export type NoteAction =
                 AddNoteAction |
                 ArchiveNoteAction |
                 RestoreNoteAction |
-                RemoveNoteAction
+                RemoveNoteAction |
+                RemoveAllToggleAction |
+                ArchiveAllToggleAction

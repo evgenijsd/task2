@@ -10,6 +10,7 @@ import { TableNoteHeader } from './TableNoteHeader';
 
 const NoteList: React.FC = () => {
     let {notes, error, loading} = useTypedSelector(state => state.note)
+    const {fetchCategories} = useActions()
     const {fetchNotes} = useActions()    
 
     const [modal, setModal] = useState(false)
@@ -34,6 +35,7 @@ const NoteList: React.FC = () => {
 
     useEffect(() => {
         fetchNotes()
+        fetchCategories()
     }, []) 
 
     if (loading) {
@@ -48,7 +50,7 @@ const NoteList: React.FC = () => {
         <>
         {!modal && <>
             <table className="table-auto">
-              <TableNoteHeader notes={notes} archive={false}/>      
+              <TableNoteHeader archive={false}/>      
               <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
             </table>
 
@@ -57,7 +59,7 @@ const NoteList: React.FC = () => {
             <CategoryList />
 
             <table className="table-auto">
-              <TableNoteHeader notes={notes} archive={true}/>      
+              <TableNoteHeader archive={true}/>      
               <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
             </table>
           </>}

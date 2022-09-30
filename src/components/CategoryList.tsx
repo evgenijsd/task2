@@ -3,13 +3,8 @@ import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const CategoryList: React.FC = () => {
-    const {categories, error, loading} = useTypedSelector(state => state.category)
-    const {fetchCategories} = useActions()
+    const {categories, error, loading} = useTypedSelector(state => state.category)    
     const notes = useTypedSelector(state => state.note).notes
-
-    useEffect(() => {
-        fetchCategories()
-    }, []) 
 
     if (loading) {
         return <h1>Loading...</h1>
@@ -17,7 +12,6 @@ const CategoryList: React.FC = () => {
     if (error) {
         return <h1>{error}</h1>
     }
-
     
     return (
         <>
