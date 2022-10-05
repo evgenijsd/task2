@@ -25,23 +25,25 @@ export function TableNoteHeader({archive}: TableNoteHeaderProps) {
     }
 
     return (
+        <thead className="bg-gray-100">
         <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Created</th>
-            <th>Category</th>
-            <th>Content</th>
-            <th>Dates</th>
+            <th className='w-1/12 p-2'></th>
+            <th className='w-1/6 p-2 text-left'>Name</th>
+            <th className='w-1/12 p-2 text-left'>Created</th>
+            <th className='w-1/6 p-2 text-left'>Category</th>
+            <th className='w-1/5 p-2 text-left'>Content</th>
+            <th className='w-1/6 p-2 text-left'>Dates</th>
             <th>
-            <div className="container" >                    
-                <button className="btn2" id="notes_archive" onClick={() => archiveToggleAllNote(archive)}>
-                    <img height="30" width="30" src="https://img.icons8.com/dotty/344/archive-folder.png"/>
+            <div className="w-100 p-2 flex items-left justify-left" >                    
+                <button id="notes_archive" onClick={() => archiveToggleAllNote(archive)} className="hover:scale-110 hover:shadow-xl focus:outline-none focus:ring hover:bg-yellow-200">
+                    <img height="30" width="30" alt="not img" src="https://img.icons8.com/dotty/344/archive-folder.png"/>
                 </button>          
-                <button className="btn2" id="notes_delete" onClick={() => deleteAllNote(archive)}>
-                    <img height="30" width="30" src="https://img.icons8.com/sf-ultralight/344/trash.png"/>
+                <button id="notes_delete" onClick={() => deleteAllNote(archive)} className="hover:scale-110 hover:shadow-xl focus:outline-none focus:ring hover:bg-yellow-200">
+                    <img height="30" width="30" alt="not img" src="https://img.icons8.com/sf-ultralight/344/trash.png"/>
                 </button>
             </div>
             </th>
 		</tr>
+        </thead>
     )
 }
