@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { Provider } from 'react-redux';
+import React from 'react'
 
 import NoteList from './components/NoteList'
-import { store } from './store';
 
 
 function App() {

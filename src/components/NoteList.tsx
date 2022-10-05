@@ -38,35 +38,50 @@ const NoteList: React.FC = () => {
   }, []) 
 
   if (loading) {
-      return <h1>Loading...</h1>
+      return <h1 className="text-center">Loading...</h1>
   }
   if (error) {
-      return <h1>{error}</h1>
+      return <h1 className="text-center text-red-600">{error}</h1>
   }
   
   return (
-      <>
-      {!modal && <>
-          <table className="table-auto">
-            <TableNoteHeader archive={false}/>      
-            <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
-          </table>
+    <>
+      {!modal && 
+        <>
+          <div className="mx-10 mt-10">
+            <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-200">
+              <table className="table-fixed min-w-full divide-y divide-gray-200 text-sm">
+                <TableNoteHeader archive={false}/>      
+                <TableLineNote notes={notes.filter(x => !x.archive)} updateNote={onModal} />
+              </table>
+            </div>
+          </div>
 
-          <button id="button-create" type="button" onClick={clickCreate}>Create Note</button>
+          <div className='flex items-end justify-end'>
+              <button type="button" onClick={clickCreate} className=" inline-block mx-10 mt-5 rounded bg-green-700 px-8 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500">
+                  Create Note
+              </button>
+          </div>
+            
 
           <CategoryList />
 
-          <table className="table-auto">
-            <TableNoteHeader archive={true}/>      
-            <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
-          </table>
-        </>}
+          <div className="m-10">
+            <div className="overflow-hidden overflow-x-auto rounded-lg border border-gray-200">
+              <table className="table-fixed min-w-full divide-y divide-gray-200 text-sm">
+                <TableNoteHeader archive={true}/>      
+                <TableLineNote notes={notes.filter(x => x.archive)} updateNote={onModal} />
+              </table>
+            </div>
+          </div>
+        </>
+      }
 
-        {modal && 
-          <Modal onClose={closeState}>
-            <CreateNote onCreate={createHandler} />
-          </Modal>
-        }
+      {modal && 
+        <Modal onClose={closeState}>
+          <CreateNote onCreate={createHandler} />
+        </Modal>
+      }
     </>
   )
 }

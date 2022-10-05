@@ -1,4 +1,3 @@
-import NoteList from "../../components/NoteList";
 import {NoteAction, NoteActionTypes, NoteState} from "../../types/note";
 
 const initialState: NoteState = {
