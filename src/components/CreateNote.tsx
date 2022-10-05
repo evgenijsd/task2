@@ -86,22 +86,24 @@ export function CreateNote({onCreate}: CreateNotesProps) {
     }
    
     return (
-            <form id="form" onSubmit={submitHandler}>
-                <div className="text-2xl text-center mb-2">Edit/Create</div>
-                <div className="guruweba_example_infofield">Category</div>
-                <select className='border py-2 px-4 mb-2 w-full outline-0' value={category} onChange={event => setCategory(event.target.value)}>
-                    {categories.map(option => (
-                        <option key={option.name}>{option.name}</option>
-                    ))}
-                    </select>                        
-                <div>Name</div>
-                <input type="text" className='border py-2 px-4 mb-2 w-full outline-0' value={name} onChange={event => setName(event.target.value)}/>
-                <div>Content</div>
-                <input type="text" className='border py-2 px-4 mb-2 w-full outline-0' value={content} onChange={event => setContent(event.target.value)}/>
-                <div className='flex items-end justify-end'>
-                    <button type="submit" className="inline-block mt-5 rounded bg-green-700 px-6 py-2 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500">Ok</button>
-                </div>
-                {error && <ErrorMessage error={error} />}
-            </form>
+        <form id="form" onSubmit={submitHandler}>
+            <div className="text-2xl text-center mb-2">Edit/Create</div>
+            <div className="guruweba_example_infofield">Category</div>
+            <select className='border py-2 px-4 mb-2 w-full outline-0' value={category} onChange={event => setCategory(event.target.value)}>
+                {categories.map(option => (
+                    <option key={option.name}>{option.name}</option>
+                ))}
+            </select>                        
+            <div>Name</div>
+            <input type="text" className='border py-2 px-4 mb-2 w-full outline-0' value={name} onChange={event => setName(event.target.value)}/>
+            <div>Content</div>
+            <input type="text" className='border py-2 px-4 mb-2 w-full outline-0' value={content} onChange={event => setContent(event.target.value)}/>
+            <div className='flex items-end justify-end'>
+                <button type="submit" className="inline-block mt-5 rounded bg-green-700 px-6 py-2 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500">
+                    Ok
+                </button>
+            </div>
+            {error && <ErrorMessage error={error} />}
+        </form>
     )
 }
