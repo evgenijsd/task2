@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypedSelector';
 import { NoteActionTypes } from '../types/note';
 import { INote } from '../types/noteData';
 
@@ -10,7 +9,6 @@ interface ContainerNoteProps {
 }
 
 export function ContainerNote({note, onUpdate}: ContainerNoteProps) {
-    let notes = useTypedSelector(state => state.note).notes
     const dispatch = useDispatch()
 
     const editNote = (note: INote) => {
@@ -39,14 +37,14 @@ export function ContainerNote({note, onUpdate}: ContainerNoteProps) {
    
     return (
         <div className="container" >            
-            <button className="btn" data-id={note.id} onClick={() => editNote(note)}>
-                <img height="25" width="25" src="https://img.icons8.com/material-rounded/344/edit--v1.png"/>
+            <button data-id={note.id} onClick={() => editNote(note)} className="hover:scale-110 hover:shadow-xl focus:outline-none focus:ring hover:bg-yellow-200">
+                <img height="25" width="25" alt="not img" src="https://img.icons8.com/material-rounded/344/edit--v1.png"/>
             </button>          
-            <button className="btn" data-id={note.id} onClick={() => archiveNote(note)}>
-                <img height="25" width="25" src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/344/external-_36-user-interface-jumpicon-(glyph)-jumpicon-glyph-ayub-irawan.png"/>
+            <button data-id={note.id} onClick={() => archiveNote(note)} className="hover:scale-110 hover:shadow-xl focus:outline-none focus:ring hover:bg-yellow-200">
+                <img height="25" width="25" alt="not img" src="https://img.icons8.com/external-jumpicon-glyph-ayub-irawan/344/external-_36-user-interface-jumpicon-(glyph)-jumpicon-glyph-ayub-irawan.png"/>
             </button>          
-            <button className="btn" data-id={note.id} onClick={() => deleteNote(note)}>
-                <img height="25" width="25" src="https://img.icons8.com/material-sharp/344/trash.png"/>
+            <button data-id={note.id} onClick={() => deleteNote(note)} className="hover:scale-110 hover:shadow-xl focus:outline-none focus:ring hover:bg-yellow-200">
+                <img height="25" width="25" alt="not img" src="https://img.icons8.com/material-sharp/344/trash.png"/>
             </button>
         </div> 
     )
