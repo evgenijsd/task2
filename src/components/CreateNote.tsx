@@ -12,9 +12,11 @@ interface CreateNotesProps {
 export function CreateNote({onCreate}: CreateNotesProps) {
     const dispatch = useDispatch()
     const notes = useTypedSelector(state => state.note).notes 
-    const categories = useTypedSelector(state => state.category).categories 
+    const categories = useTypedSelector(state => state.category).categories
+    let startCategory = ''
+    if (categories != null) startCategory = categories[0].name
     const [name, setName] = useState('')
-    const [category, setCategory] = useState(categories[0].name)
+    const [category, setCategory] = useState(startCategory)
     const [content, setContent] = useState('')
     const [error, setError] = useState('') 
 
